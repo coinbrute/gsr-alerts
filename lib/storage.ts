@@ -20,7 +20,13 @@ export type Holdings = {
     portfolioGoldEqOz: number;
   };
   
-  const KEY = "gsr_alerts_v1";
+const KEY = "gsr_alerts_v1";
+
+const EXAMPLE_HOLDINGS: Holdings = {
+  btc: 1,
+  silverOz: 1,
+  goldOz: 1
+};
   
   export type AppState = {
     holdings: Holdings;
@@ -35,8 +41,8 @@ export type Holdings = {
     refreshMinutes: number; // auto-refresh interval
   };
   
-  export const DEFAULT_STATE: AppState = {
-    holdings: { btc: 0.20619573, silverOz: 167, goldOz: 1.1 },
+export const DEFAULT_STATE: AppState = {
+  holdings: { btc: 0, silverOz: 0, goldOz: 0 },
     snapshots: [],
     lastBandId: undefined,
     manualGoldUsd: undefined,
@@ -44,16 +50,23 @@ export type Holdings = {
     refreshMinutes: 15
   };
   
-  export function loadState(): AppState {
+export function loadState(): AppState {
     if (typeof window === "undefined") return DEFAULT_STATE;
     const raw = localStorage.getItem(KEY);
     if (!raw) return DEFAULT_STATE;
     try {
       const parsed = JSON.parse(raw) as Partial<AppState>;
+    const parsedHoldings: Partial<Holdings> = parsed.holdings ?? {};
+    const isLegacyDefaults =
+      parsedHoldings.btc === EXAMPLE_HOLDINGS.btc &&
+      parsedHoldings.silverOz === EXAMPLE_HOLDINGS.silverOz &&
+      parsedHoldings.goldOz === EXAMPLE_HOLDINGS.goldOz;
       return {
         ...DEFAULT_STATE,
         ...parsed,
-        holdings: { ...DEFAULT_STATE.holdings, ...(parsed.holdings ?? {}) },
+      holdings: isLegacyDefaults
+        ? { ...DEFAULT_STATE.holdings }
+        : { ...DEFAULT_STATE.holdings, ...parsedHoldings },
         snapshots: parsed.snapshots ?? DEFAULT_STATE.snapshots
       };
     } catch {

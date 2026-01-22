@@ -155,7 +155,7 @@ Defaults are set to your current values in:
 Change:
 
 ```ts
-holdings: { btc: 0.20619573, silverOz: 167, goldOz: 1.1 }
+holdings: { btc: 0, silverOz: 0, goldOz: 0 }
 ```
 
 ### Roadmap ideas (useful upgrades)

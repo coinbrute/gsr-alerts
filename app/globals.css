@@ -27,4 +27,152 @@
   button {
     cursor: pointer;
   }
+
+  .page {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: baseline;
+  }
+
+  .page-title h1 {
+    margin: 0;
+    font-size: 30px;
+    line-height: 1.2;
+  }
+
+  .subtle {
+    color: var(--muted);
+    margin-top: 6px;
+    font-size: 14px;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+  }
+
+  .btn {
+    padding: 10px 14px;
+    border-radius: 12px;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .stack {
+    display: grid;
+    gap: 10px;
+  }
+
+  .stack.tight {
+    gap: 6px;
+  }
+
+  .field {
+    display: grid;
+    gap: 6px;
+  }
+
+  .field input {
+    width: 100%;
+    min-width: 0;
+    padding: 8px 10px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text);
+  }
+
+  .helper {
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .muted-top {
+    margin-top: 8px;
+    color: var(--muted);
+  }
+
+  .divider-top {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+
+  .section-title {
+    margin: 0 0 8px 0;
+  }
+
+  .controls-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .chart-wrap {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .footer {
+    margin-top: 28px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  @media (max-width: 900px) {
+    .page {
+      padding: 18px;
+    }
+
+    .page-header {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .btn {
+      width: 100%;
+    }
+
+    .grid-2 {
+      grid-template-columns: 1fr;
+    }
+
+    .live-card {
+      order: 1;
+    }
+
+    .holdings-card {
+      order: 2;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .page {
+      padding: 14px;
+    }
+
+    .page-title h1 {
+      font-size: 24px;
+    }
+
+    .card {
+      padding: 14px;
+    }
+  }
   

@@ -29,15 +29,6 @@ function fmt(n: number, d = 2) {
   return n.toLocaleString(undefined, { maximumFractionDigits: d, minimumFractionDigits: d });
 }
 
-function cardStyle(): React.CSSProperties {
-  return {
-    background: "var(--card)",
-    border: "1px solid var(--border)",
-    borderRadius: 14,
-    padding: 16
-  };
-}
-
 function pill(sev: "none" | "info" | "warn" | "alert"): React.CSSProperties {
   const base: React.CSSProperties = {
     display: "inline-block",
@@ -232,39 +223,33 @@ export default function Home() {
   }, [live, resolvedMetals, state.holdings]);
 
   return (
-    <main style={{ maxWidth: 1180, margin: "0 auto", padding: 24 }}>
-      <div style={{ display: "flex", justifyContent: "space-between", gap: 16, alignItems: "baseline" }}>
-        <div>
-          <h1 style={{ margin: 0 }}>GSR Alerts + Portfolio Tracker</h1>
-          <div style={{ color: "var(--muted)", marginTop: 6 }}>
+    <main className="page">
+      <div className="page-header">
+        <div className="page-title">
+          <h1>GSR Alerts + Portfolio Tracker</h1>
+          <div className="subtle">
             Physical metals + BTC tracking with doctrine-band alerts (local-only storage).
           </div>
         </div>
 
         <button
           onClick={refresh}
-          style={{
-            padding: "10px 14px",
-            borderRadius: 12,
-            background: "transparent",
-            border: "1px solid var(--border)",
-            color: "var(--text)"
-          }}
+          className="btn"
         >
           Refresh now
         </button>
       </div>
 
-      <div style={{ marginTop: 16, ...cardStyle() }}>
+      <div className="card" style={{ marginTop: 16 }}>
         <b>Status:</b> {status}
       </div>
 
-      <section style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginTop: 16 }}>
-        <div style={cardStyle()}>
-          <h2 style={{ marginTop: 0 }}>Holdings</h2>
+      <section className="grid-2" style={{ marginTop: 16 }}>
+        <div className="card holdings-card">
+          <h2>Holdings</h2>
 
-          <div style={{ display: "grid", gap: 10 }}>
-            <label style={{ display: "grid", gap: 6 }}>
+          <div className="stack">
+            <label className="field">
               BTC
               <input
                 type="number"
@@ -276,7 +261,7 @@ export default function Home() {
               />
             </label>
 
-            <label style={{ display: "grid", gap: 6 }}>
+            <label className="field">
               Silver (oz)
               <input
                 type="number"
@@ -288,7 +273,7 @@ export default function Home() {
               />
             </label>
 
-            <label style={{ display: "grid", gap: 6 }}>
+            <label className="field">
               Gold (oz)
               <input
                 type="number"
@@ -300,7 +285,7 @@ export default function Home() {
               />
             </label>
 
-            <label style={{ display: "grid", gap: 6 }}>
+            <label className="field">
               Auto-refresh (minutes)
               <input
                 type="number"
@@ -311,18 +296,18 @@ export default function Home() {
               />
             </label>
 
-            <div style={{ color: "var(--muted)", fontSize: 13 }}>
+            <div className="helper">
               Snapshots are stored in your browser (up to 1000 entries). No server database.
             </div>
           </div>
         </div>
 
-        <div style={cardStyle()}>
-          <h2 style={{ marginTop: 0 }}>Live Prices</h2>
+        <div className="card live-card">
+          <h2>Live Prices</h2>
 
           {live ? (
             <>
-              <div style={{ display: "grid", gap: 6 }}>
+              <div className="stack tight">
                 <div>BTC/USD: <b>{fmt(live.btcUsd, 2)}</b></div>
                 <div>Gold USD/oz: <b>{resolvedMetals.goldUsd ? fmt(resolvedMetals.goldUsd, 2) : "—"}</b></div>
                 <div>Silver USD/oz: <b>{resolvedMetals.silverUsd ? fmt(resolvedMetals.silverUsd, 2) : "—"}</b></div>
@@ -334,14 +319,14 @@ export default function Home() {
                   </span>
                 </div>
 
-                <div style={{ marginTop: 8, color: "var(--muted)" }}>
+                <div className="muted-top">
                   Action: <b style={{ color: "var(--text)" }}>{currentBand ? currentBand.action : "—"}</b>
                 </div>
               </div>
 
               {liveComponentValues && (
-                <div style={{ marginTop: 14, paddingTop: 14, borderTop: "1px solid var(--border)" }}>
-                  <h3 style={{ margin: "0 0 8px 0" }}>Portfolio (Live)</h3>
+                <div className="divider-top">
+                  <h3 className="section-title">Portfolio (Live)</h3>
                   <div>BTC value: <b>${fmt(liveComponentValues.btcValueUsd, 2)}</b></div>
                   <div>Gold value: <b>${fmt(liveComponentValues.goldValueUsd, 2)}</b></div>
                   <div>Silver value: <b>${fmt(liveComponentValues.silverValueUsd, 2)}</b></div>
@@ -353,10 +338,10 @@ export default function Home() {
             <div style={{ color: "var(--muted)" }}>Loading…</div>
           )}
 
-          <div style={{ marginTop: 16, paddingTop: 16, borderTop: "1px solid var(--border)" }}>
-            <h3 style={{ marginTop: 0 }}>Manual Metals Fallback (USD/oz)</h3>
-            <div style={{ display: "grid", gap: 10 }}>
-              <label style={{ display: "grid", gap: 6 }}>
+          <div className="divider-top" style={{ marginTop: 16 }}>
+            <h3 className="section-title">Manual Metals Fallback (USD/oz)</h3>
+            <div className="stack">
+              <label className="field">
                 Gold USD/oz
                 <input
                   type="number"
@@ -365,7 +350,7 @@ export default function Home() {
                   onChange={(e) => setState((s) => ({ ...s, manualGoldUsd: Number(e.target.value) }))}
                 />
               </label>
-              <label style={{ display: "grid", gap: 6 }}>
+              <label className="field">
                 Silver USD/oz
                 <input
                   type="number"
@@ -374,7 +359,7 @@ export default function Home() {
                   onChange={(e) => setState((s) => ({ ...s, manualSilverUsd: Number(e.target.value) }))}
                 />
               </label>
-              <div style={{ color: "var(--muted)", fontSize: 13 }}>
+              <div className="helper">
                 Use this if GoldAPI isn't configured or rate-limited. BTC price still updates live.
               </div>
             </div>
@@ -382,21 +367,25 @@ export default function Home() {
         </div>
       </section>
 
-      <section style={{ marginTop: 16, ...cardStyle() }}>
-        <h2 style={{ marginTop: 0 }}>Portfolio Value (USD)</h2>
-        <Line data={usdChart} />
+      <section className="card" style={{ marginTop: 16 }}>
+        <h2>Portfolio Value (USD)</h2>
+        <div className="chart-wrap">
+          <Line data={usdChart} />
+        </div>
       </section>
 
-      <section style={{ marginTop: 16, ...cardStyle() }}>
-        <h2 style={{ marginTop: 0 }}>Portfolio Total (Gold-Equivalent oz)</h2>
-        <Line data={goldEqChart} />
-        <div style={{ color: "var(--muted)", marginTop: 8, fontSize: 13 }}>
+      <section className="card" style={{ marginTop: 16 }}>
+        <h2>Portfolio Total (Gold-Equivalent oz)</h2>
+        <div className="chart-wrap">
+          <Line data={goldEqChart} />
+        </div>
+        <div className="helper" style={{ marginTop: 8 }}>
           Gold-equivalent converts silver at current GSR and BTC via USD-to-gold conversion.
         </div>
       </section>
 
-      <section style={{ marginTop: 16, ...cardStyle() }}>
-        <h2 style={{ marginTop: 0 }}>Doctrine Bands</h2>
+      <section className="card" style={{ marginTop: 16 }}>
+        <h2>Doctrine Bands</h2>
         <ul style={{ margin: 0, paddingLeft: 18 }}>
           {DEFAULT_BANDS.map((b) => (
             <li key={b.id} style={{ marginBottom: 8 }}>
@@ -406,18 +395,12 @@ export default function Home() {
         </ul>
       </section>
 
-      <section style={{ marginTop: 16, ...cardStyle() }}>
-        <h2 style={{ marginTop: 0 }}>Data Controls</h2>
-        <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+      <section className="card" style={{ marginTop: 16 }}>
+        <h2>Data Controls</h2>
+        <div className="controls-row">
           <button
             onClick={() => setState((s) => ({ ...s, snapshots: [] }))}
-            style={{
-              padding: "10px 14px",
-              borderRadius: 12,
-              background: "transparent",
-              border: "1px solid var(--border)",
-              color: "var(--text)"
-            }}
+            className="btn"
           >
             Clear snapshots
           </button>
@@ -428,24 +411,18 @@ export default function Home() {
               setState(loadState());
               setStatus("Local state reset.");
             }}
-            style={{
-              padding: "10px 14px",
-              borderRadius: 12,
-              background: "transparent",
-              border: "1px solid var(--border)",
-              color: "var(--text)"
-            }}
+            className="btn"
           >
             Reset app state
           </button>
         </div>
 
-        <div style={{ color: "var(--muted)", marginTop: 10, fontSize: 13 }}>
+        <div className="helper" style={{ marginTop: 10 }}>
           Reset wipes holdings/threshold state and snapshot history stored in your browser.
         </div>
       </section>
 
-      <footer style={{ marginTop: 28, color: "var(--muted)", fontSize: 13 }}>
+      <footer className="footer">
         v1.0 — localStorage-only. Next step for “real alerts” is push/email/SMS + cooldowns.
       </footer>
     </main>

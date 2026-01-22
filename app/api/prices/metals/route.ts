@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
-import { fetchMetalsUsd } from "@/lib/prices";
+import { fetchAUGAUTUsd } from "@/lib/prices";
 
 export async function GET() {
   try {
-    const metals = await fetchMetalsUsd();
+    const metals = await fetchAUGAUTUsd();
     if (!metals) {
       return NextResponse.json({ goldUsd: null, silverUsd: null });
     }
